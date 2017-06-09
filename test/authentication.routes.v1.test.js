@@ -9,7 +9,7 @@ process.env.APP_PASSWORD = 'password';
 
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var server = require('../server');
+var server = require('../server.js');
 var chould = chai.should();
 
 chai.use(chaiHttp);
@@ -17,7 +17,7 @@ chai.use(chaiHttp);
 describe('Auth API v1', function() {
 
     it('returns UnauthorizedError on GET /api/v1/todos when not logged in', function(done) {
-        chai.request(server)
+        chai.request(require('../server.js'))
             .get('/api/v1/todos')
             .end(function(err, res) {
                 res.should.have.status(401);
@@ -33,7 +33,7 @@ describe('Auth API v1', function() {
         var user = {
             username: "invalid"
         }
-        chai.request(server)
+        chai.request(require('../server.js'))
             .post('/api/v1/login')
             .send(user)
             .end(function(err, res) {

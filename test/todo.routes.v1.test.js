@@ -67,3 +67,60 @@ describe('GET /api/v1/todos', function() {
     //
 
 });
+
+describe('POST /api/v1/todos', function() {
+
+    //
+    // Before all tests: get a valid JWT token from the server
+    //
+    before(function(done) {
+        var user = {
+            username: "username",
+            password: "password"
+        }
+        chai.request(server)
+            .post('/api/v1/login')
+            .send(user)
+            .end(function(err, res) {
+                res.body.should.be.an('object');
+                res.body.should.have.property('token');
+                token = res.body.token;
+                done();
+            });
+    });
+
+    //
+    beforeEach(function() {
+        // set things we need for testing
+    });
+
+    //
+    afterEach(function() {
+        // reset things we changed for testing
+    });
+
+    // 
+    //
+    it('should save a new ToDo', function(done) {
+        var todo = {
+            Titel: "Nieuwe ToDo",
+            Beschrijving: "Hier staat tekst"
+        }
+        chai.request(server)
+            .post('/api/v1/todos')
+            .send(todo)
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.be.a('object');
+                res.body.should.have.property('result').that.is.an('object');
+                res.body.result.should.have.property('affectedRows').equal(1);
+                res.body.result.should.have.property('changedRows').equal(0);
+                res.body.result.should.have.property('warningCount').equal(0);
+                res.body.result.should.have.property('message').equal('');
+                done();
+            });
+    });
+
+});

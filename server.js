@@ -13,6 +13,13 @@ var expressJWT = require('express-jwt');
 
 var app = express();
 
+// Met module.exports kunnen we variabelen beschikbaar maken voor andere bestanden.
+// Je zou dit kunnen vergelijken met het 'public' maken van attributen in Java.
+// Javascript neemt impliciet aan dat bovenaan ieder bestand de volgende regel staat.
+// Deze kun je dus weglaten!
+// Zie eventueel ook: https://www.sitepoint.com/understanding-module-exports-exports-node-js/  
+module.exports = {};
+
 // bodyParser zorgt dat we de body uit een request kunnen gebruiken,
 // hierin zit de inhoud van een POST request.
 app.use(bodyParser.urlencoded({ 'extended': 'true' })); // parse application/x-www-form-urlencoded
