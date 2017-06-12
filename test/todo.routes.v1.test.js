@@ -102,17 +102,18 @@ describe('GET /api/v1/todo/:id', function() {
             .get('/api/v1/todos/' + todoID)
             .set('Authorization', 'Bearer ' + token)
             .end(function(err, res) {
-                // expect(err).to.be.a('null');
+                console.dir(res.body);
                 res.should.have.status(200);
                 res.should.be.json;
                 res.body.should.be.a('object');
                 res.body.should.have.property('result').that.is.an('array');
                 res.body.result.should.have.lengthOf(1);
-                res.body.result.should.have.property('ID');
-                res.body.result.should.have.property('Titel').that.is.a('string');
-                res.body.result.should.have.property('Beschrijving').that.is.a('string');
-                res.body.result.should.have.property('Status').that.is.a('string');
-                res.body.result.should.have.property('LaatstGewijzigdOp').that.is.a('date');
+                res.body.result[0].should.include({ ID: todoID });
+                res.body.result[0].should.have.property('ID').equal(todoID);
+                res.body.result[0].should.have.property('Titel').that.is.a('string');
+                res.body.result[0].should.have.property('Beschrijving').that.is.a('string');
+                res.body.result[0].should.have.property('Status').that.is.a('string').equal('OPEN');
+                // res.body.result[0].should.have.property('LaatstGewijzigdOp').that.is.a('date');
 
                 done();
             });
