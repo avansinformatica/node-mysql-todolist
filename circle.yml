@@ -1,6 +1,12 @@
 machine:
   node:
     version: 6.10.0
+  environment:
+    APP_ENV: testing
+    DB_HOST: 127.0.0.1
+    DB_NAME: circle_test
+    DB_USER: ubuntu
+    DB_PASSWORD: 
 
 dependencies:
   override:
@@ -9,10 +15,3 @@ dependencies:
 database:
   override:
     - mysql -u ubuntu circle_test < tododb.sql
-
-environment:
-    APP_ENV: testing
-    process.env.DB_HOST: 127.0.0.1
-    process.env.DB_NAME: circle_test
-    process.env.DB_USER: ubuntu
-    process.env.DB_PASSWORD: test
