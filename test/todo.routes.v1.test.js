@@ -15,25 +15,32 @@ var token;
 
 chai.use(chaiHttp);
 
+//
+// Helper om token op te halen.
+//
+var getToken = function() {
+    var user = {
+        username: "username",
+        password: "password"
+    }
+    chai.request(server)
+        .post('/api/v1/login')
+        .send(user)
+        .end(function(err, res) {
+            res.body.should.be.an('object');
+            res.body.should.have.property('token');
+            token = res.body.token;
+        });
+}
+
+
 describe('GET /api/v1/todos', function() {
 
-    //
-    // Before all tests: get a valid JWT token from the server
-    //
-    before(function(done) {
-        var user = {
-            username: "username",
-            password: "password"
+    // Zorg dat we een token hebben zodat we de tests kunnen uitvoeren.
+    before(function() {
+        if (!this.token) {
+            getToken();
         }
-        chai.request(server)
-            .post('/api/v1/login')
-            .send(user)
-            .end(function(err, res) {
-                res.body.should.be.an('object');
-                res.body.should.have.property('token');
-                token = res.body.token;
-                done();
-            });
     });
 
     //
@@ -68,28 +75,13 @@ describe('GET /api/v1/todos', function() {
 
 });
 
-var getToken = function() {
-    var user = {
-        username: "username",
-        password: "password"
-    }
-    chai.request(server)
-        .post('/api/v1/login')
-        .send(user)
-        .end(function(err, res) {
-            res.body.should.be.an('object');
-            res.body.should.have.property('token');
-            token = res.body.token;
-        });
-}
-
 describe('GET /api/v1/todo/:id', function() {
 
-    //
-    // Before all tests: get a valid JWT token from the server
-    //
+    // Zorg dat we een token hebben zodat we de tests kunnen uitvoeren.
     before(function() {
-        getToken();
+        if (!this.token) {
+            getToken();
+        }
     });
 
     //
@@ -133,23 +125,11 @@ describe('GET /api/v1/todo/:id', function() {
 
 describe('POST /api/v1/todos', function() {
 
-    //
-    // Before all tests: get a valid JWT token from the server
-    //
-    before(function(done) {
-        var user = {
-            username: "username",
-            password: "password"
+    // Zorg dat we een token hebben zodat we de tests kunnen uitvoeren.
+    before(function() {
+        if (!this.token) {
+            getToken();
         }
-        chai.request(server)
-            .post('/api/v1/login')
-            .send(user)
-            .end(function(err, res) {
-                res.body.should.be.an('object');
-                res.body.should.have.property('token');
-                token = res.body.token;
-                done();
-            });
     });
 
     //
