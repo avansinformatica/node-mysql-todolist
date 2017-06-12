@@ -142,19 +142,17 @@ describe('POST /api/v1/todos', function() {
         }
     });
 
-    // zet waarden die we nodig hebben om te testen - is nog niet nodig.
-    beforeEach(function() {});
-
-    // Verwijder de ToDo die we in de tests hebben toegevoegd.
+    // We voegen in deze test een ToDo toe.
+    // Voor de goede orde moeten we die verwijderen,
+    // zodat volgende tests met een schone lei verder kunnen.
     afterEach(function() {
         var db = require('../config/db');
         var query = 'DELETE from todos WHERE ID=' + todoID;
         db.query(query, function(error, rows, fields) {
             if (error) {
-                console.error('niet gelukt om item te verwijderen');
+                console.error('Niet gelukt om item te verwijderen!');
             };
         });
-
     });
 
     // Hier start een testcase.
@@ -168,7 +166,6 @@ describe('POST /api/v1/todos', function() {
             .send(todo)
             .set('Authorization', 'Bearer ' + token)
             .end(function(err, res) {
-                console.dir(res);
                 res.should.have.status(200);
                 res.should.be.json;
                 res.body.should.be.a('object');
@@ -178,7 +175,10 @@ describe('POST /api/v1/todos', function() {
                 res.body.result.should.have.property('warningCount').equal(0);
                 res.body.result.should.have.property('message').equal('');
 
+                // Bewaar de ID van de zojuist toegevoegde ToDo.
+                // Die moeten we na deze test weer verwijderen.
                 todoID = res.body.result.insertId;
+
                 done();
             });
     });
