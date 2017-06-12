@@ -68,6 +68,69 @@ describe('GET /api/v1/todos', function() {
 
 });
 
+var getToken = function() {
+    var user = {
+        username: "username",
+        password: "password"
+    }
+    chai.request(server)
+        .post('/api/v1/login')
+        .send(user)
+        .end(function(err, res) {
+            res.body.should.be.an('object');
+            res.body.should.have.property('token');
+            token = res.body.token;
+        });
+}
+
+describe('GET /api/v1/todo/:id', function() {
+
+    //
+    // Before all tests: get a valid JWT token from the server
+    //
+    before(function() {
+        getToken();
+    });
+
+    //
+    beforeEach(function() {
+        // set things we changed for testing
+    });
+
+    //
+    afterEach(function() {
+        // reset things we changed for testing
+    });
+
+    // 
+    //
+    it('should return a single ToDo', function(done) {
+        var todoID = 1;
+        chai.request(server)
+            .get('/api/v1/todos/' + todoID)
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                // expect(err).to.be.a('null');
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.be.a('object');
+                res.body.should.have.property('result').that.is.an('array');
+                res.body.result.should.have.lengthOf(1);
+                res.body.result.should.have.property('ID');
+                res.body.result.should.have.property('Titel').that.is.a('string');
+                res.body.result.should.have.property('Beschrijving').that.is.a('string');
+                res.body.result.should.have.property('Status').that.is.a('string');
+                res.body.result.should.have.property('LaatstGewijzigdOp').that.is.a('date');
+
+                done();
+            });
+    });
+
+    // 
+    //
+
+});
+
 describe('POST /api/v1/todos', function() {
 
     //
