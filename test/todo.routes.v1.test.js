@@ -85,11 +85,6 @@ describe('GET /api/v1/todos', function() {
                 res.body.should.be.a('object');
                 res.body.should.have.property('result').that.is.an('array');
                 res.body.result.should.have.lengthOf(4);
-                res.body.result[0].should.include({ ID: 1 });
-                res.body.result[0].should.have.property('ID').equal(todoID);
-                res.body.result[0].should.have.property('Titel').that.is.a('string');
-                res.body.result[0].should.have.property('Beschrijving').that.is.a('string');
-                res.body.result[0].should.have.property('Status').that.is.a('string').equal('OPEN');
                 done();
             });
     });
