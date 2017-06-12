@@ -17,7 +17,7 @@ var auth = require('../auth/authentication');
 router.post('/login', function(req, res) {
 
     // Even kijken wat de inhoud is
-    console.dir(req.body);
+    // console.dir(req.body);
 
     // De username en pwd worden meegestuurd in de request body
     var username = req.body.username;
@@ -35,7 +35,7 @@ router.post('/login', function(req, res) {
             "token": token,
         });
     } else {
-        console.log('Input: username = ' + username + ', password = ' + password);
+        // console.log('Input: username = ' + username + ', password = ' + password);
         res.status(401).json({ "error": "Invalid credentials, bye" })
     }
 

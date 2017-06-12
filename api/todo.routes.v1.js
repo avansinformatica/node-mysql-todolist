@@ -52,8 +52,8 @@ routes.post('/todos', function(req, res) {
         timeout: 2000 // 2secs
     };
 
-    console.dir(todos);
-    console.log('Onze query: ' + query.sql);
+    // console.dir(todos);
+    // console.log('Onze query: ' + query.sql);
 
     res.contentType('application/json');
     db.query(query, function(error, rows, fields) {
@@ -82,8 +82,8 @@ routes.put('/todos/:id', function(req, res) {
         timeout: 2000 // 2secs
     };
 
-    console.dir(todos);
-    console.log('Onze query: ' + query.sql);
+    // console.dir(todos);
+    // console.log('Onze query: ' + query.sql);
 
     res.contentType('application/json');
     db.query(query, function(error, rows, fields) {
@@ -111,7 +111,7 @@ routes.delete('/todos/:id', function(req, res) {
         timeout: 2000 // 2secs
     };
 
-    console.log('Onze query: ' + query.sql);
+    // console.log('Onze query: ' + query.sql);
 
     res.contentType('application/json');
     db.query(query, function(error, rows, fields) {

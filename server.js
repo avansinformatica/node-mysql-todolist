@@ -41,7 +41,7 @@ app.set('port', (process.env.PORT | config.webPort));
 app.set('env', (process.env.ENV | 'development'))
 
 // Installeer Morgan als logger
-app.use(logger('dev'));
+// app.use(logger('dev'));
 
 // Installeer de routers
 app.use('/api/v1', auth_routes_v1);
