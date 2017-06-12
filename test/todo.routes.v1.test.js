@@ -104,7 +104,7 @@ describe('GET /api/v1/todo/:id', function() {
     });
 
     // Hier start een testcase.
-    it('should return a single ToDo', function(done) {
+    it('should return a single ToDo on a valid ID', function(done) {
         var todoID = 1;
         chai.request(server)
             .get('/api/v1/todos/' + todoID)
@@ -128,9 +128,24 @@ describe('GET /api/v1/todo/:id', function() {
             });
     });
 
-    // 
-    // Hier kunnen eventueel meer tests komen voor dezelfde testcase.
-    // 
+    // Hier start een testcase.
+    // Wanneer je een ongeldige ID vraagt, krijg je een leeg array.
+    // Een foutmeling zou misschien mooier zijn...
+    it('should return empty array on invalid ID', function(done) {
+        var todoID = 9999;
+        chai.request(server)
+            .get('/api/v1/todos/' + todoID)
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.be.a('object');
+                res.body.should.have.property('result').that.is.an('array');
+                res.body.result.should.have.lengthOf(0);
+
+                done();
+            });
+    });
 });
 
 describe('POST /api/v1/todos', function() {
