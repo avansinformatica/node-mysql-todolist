@@ -7,7 +7,7 @@ USE `todolist`;
 CREATE USER 'todolist_user'@'localhost'; -- IDENTIFIED BY 'secret';
 
 -- wijzig password voor user
-SET PASSWORD FOR 'todolist_user'@'localhost' = PASSWORD('secret');
+SET PASSWORD FOR 'todolist_user'@'localhost' = 'secret';
 
 -- geef in een keer alle rechten - soort administrator!
 GRANT ALL ON `todolist`.* TO 'todolist_user'@'localhost';
